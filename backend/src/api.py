@@ -4,8 +4,8 @@ from sqlalchemy import exc
 import json
 from flask_cors import CORS
 
-from database.models import db_drop_and_create_all, setup_db, Drink,desc
-from auth.auth import AuthError, requires_auth
+from .database.models import db_drop_and_create_all, setup_db, Drink,desc
+from .auth.auth import AuthError, requires_auth
 
 app = Flask(__name__)
 setup_db(app)
@@ -36,6 +36,8 @@ def getDrinks():
     try:
         drinks = Drink.query.all()
         formattedDrinks = [drink.short() for drink in drinks]
+        
+        print(formattedDrinks)
 
         return jsonify({
             "success": True,
@@ -105,7 +107,7 @@ def updateDrink(jwt,drinkId):
 
         drink.update()
         
-        updatedDrink = drink.long()
+        updatedDrink = [drink.long()]
 
         return jsonify({
             'success': True,
