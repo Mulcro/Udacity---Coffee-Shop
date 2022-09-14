@@ -63,7 +63,7 @@ def check_permissions(permission, payload):
     if 'permissions' not in payload:
         abort(403)
 
-    # if permission not in payload['permissions']:
+    if permission not in payload['permissions']:
         abort(403)
 
     return True
